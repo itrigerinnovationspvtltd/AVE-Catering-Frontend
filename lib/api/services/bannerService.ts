@@ -86,9 +86,16 @@ export const getBannerById = async (id: string): Promise<Banner> => {
   return response.data;
 };
 
-// Create new banner
-export const createBanner = async (bannerData: CreateBannerRequest): Promise<Banner> => {
-  const response = await api.post('/banners', bannerData);
+
+// Create new banner (now accepts FormData for image upload)
+export const createBanner = async (formData: FormData): Promise<Banner> => {
+  const response = await api.post('/banners', formData, {
+    headers: {
+      // Required when sending files
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
   return response.data;
 };
 
